@@ -25,7 +25,7 @@ class Tool(BaseModel):
 
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True)
-    vendor = models.CharField(max_length=100, blank=True)
+    vendor = models.CharField(max_length=100, null=False)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='tools')
     base_monthly_cost = models.DecimalField(max_digits=10, decimal_places=2,
                                             help_text="Coût mensuel de base de l'outil (licence)")

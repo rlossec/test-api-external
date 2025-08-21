@@ -19,7 +19,6 @@ class TestCreateTool(ToolTestCase):
       self.assertEqual(response.data["vendor"], "Test Create Update Vendor 1")
       self.assertEqual(response.data["category"], self.category_1.id)
       self.assertEqual(response.data["base_monthly_cost"], 100.00)
-    
 
     # 400 response
     ## Mandatory fields : name, owner_department, vendor, category, base_monthly_cost
@@ -60,9 +59,10 @@ class TestCreateTool(ToolTestCase):
                 body["base_monthly_cost"] = cost
                 response = self.client.post(url, body)
                 self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-                self.assertEqual(
-                    response.data["base_monthly_cost"],
-                    "This field is a decimal field with 2 decimal places and strictly positive."
+                self.assertIn("base_monthly_cost", response.data)
+                self.assertIn(
+                    "This field is a decimal field with 2 decimal places and strictly positive.",
+                    response.data["base_monthly_cost"]
                 )
     
     ### website_url : URL must be a valid URL.

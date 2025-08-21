@@ -1,4 +1,4 @@
-# python manage.py test toolsmanagement.tests.test_tools
+
 from datetime import datetime
 from django.contrib.auth import get_user_model
 from rest_framework.test import APITestCase

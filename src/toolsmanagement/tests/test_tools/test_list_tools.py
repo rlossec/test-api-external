@@ -1,3 +1,5 @@
+# python manage.py test toolsmanagement.tests.test_tools.test_list_tools
+
 from rest_framework.reverse import reverse
 
 from .test_tools import ToolTestCase
