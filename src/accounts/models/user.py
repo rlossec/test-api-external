@@ -28,6 +28,6 @@ class User(AbstractUser):
     department = models.CharField(max_length=2, choices=DEPARTMENT_CHOICES)
     role = models.CharField(max_length=2, choices=ROLE_CHOICES)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES)
-    hire_date = models.DateField()
+    hire_date = models.DateField(auto_now_add=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

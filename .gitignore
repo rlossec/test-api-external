@@ -5,6 +5,9 @@ venv/
 # IDE
 .idea/
 
-# Python
-*/__pycache__/*
+# Python pycache
+__pycache__/
+
+
+
 
