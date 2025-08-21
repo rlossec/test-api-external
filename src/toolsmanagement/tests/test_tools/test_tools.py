@@ -10,6 +10,8 @@ from toolsmanagement.models import Tool, Category
 User = get_user_model()
 
 class ToolTestCase(APITestCase):
+    NOT_FOUND_TOOL_ID = 999999
+
     def setUp(self):
         self.user = User.objects.create_user(username="testuser",
                                              email="testuser@test.com",
