@@ -10,7 +10,7 @@ from toolsmanagement.models import Tool, Category
 User = get_user_model()
 
 class ToolTestCase(APITestCase):
-    NOT_FOUND_TOOL_ID = 999999
+    NOT_FOUND_ID = 999999
 
     def setUp(self):
         self.user = User.objects.create_user(username="testuser",
@@ -36,7 +36,7 @@ class ToolTestCase(APITestCase):
                                           vendor="Test Vendor 2",
                                           category=self.category_2,
                                           base_monthly_cost=200)
-        self.body = {
+        self.create_body = {
             "name": "Test Create UpdateTool 1",
             "website_url": "https://test-create-update-tool-1.com",
             "description": "Test Create Update Description 1",
@@ -44,6 +44,17 @@ class ToolTestCase(APITestCase):
             "vendor": "Test Create Update Vendor 1",
             "category": self.category_1.id,
             "base_monthly_cost": 100}
+        
+        self.update_body = {
+            "name": "Test Create UpdateTool 1",
+            "website_url": "https://test-create-update-tool-1.com",
+            "description": "Test Create Update Description 1",
+            "owner_department": "EN",
+            "vendor": "Test Create Update Vendor 1",
+            "category": self.category_1.id,
+            "base_monthly_cost": 100
+        }
+
 
 
 

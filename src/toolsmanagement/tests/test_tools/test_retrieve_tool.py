@@ -29,7 +29,7 @@ class TestRetrieveTool(ToolTestCase):
 
     # 404 response
     def test_retrieve_tool_with_invalid_id(self):
-        url = reverse("tool-detail", args=[self.NOT_FOUND_TOOL_ID])
+        url = reverse("tool-detail", args=[self.NOT_FOUND_ID])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 

@@ -7,7 +7,7 @@ class TestCreateTool(ToolTestCase):
 
     def test_create_tool(self):
       url = reverse("tool-list")
-      response = self.client.post(url, self.body)
+      response = self.client.post(url, self.create_body)
       self.assertEqual(response.status_code, 201)
       self.assertEqual(response.data["name"], "Test Create UpdateTool 1")
       self.assertEqual(response.data["website_url"], "https://test-create-update-tool-1.com")
@@ -24,7 +24,7 @@ class TestCreateTool(ToolTestCase):
         url = reverse("tool-list")
         mandatory_fields = ["name", "owner_department", "vendor", "category", "base_monthly_cost"]
         for field in mandatory_fields:
-            body = self.body.copy()
+            body = self.create_body.copy()
             body.pop(field)
             response = self.client.post(url, body)
             self.assertEqual(response.status_code, 400)
@@ -37,7 +37,7 @@ class TestCreateTool(ToolTestCase):
         url = reverse("tool-list")
         invalids_names = ["", "a", "a" * 101]
         for name in invalids_names:
-            body = self.body.copy()
+            body = self.create_body.copy()
             body["name"] = name
             response = self.client.post(url, body)
             self.assertEqual(response.status_code, 400)
@@ -48,7 +48,7 @@ class TestCreateTool(ToolTestCase):
         url = reverse("tool-list")
         invalids_base_monthly_costs = ["", -1, 0, 1.001, "a"]
         for base_monthly_cost in invalids_base_monthly_costs:
-            body = self.body.copy()
+            body = self.create_body.copy()
             body["base_monthly_cost"] = base_monthly_cost
             response = self.client.post(url, body)
             self.assertEqual(response.status_code, 400)
@@ -59,7 +59,7 @@ class TestCreateTool(ToolTestCase):
         url = reverse("tool-list")
         invalids_website_urls = ["", "a", "a" * 101]
         for website_url in invalids_website_urls:
-            body = self.body.copy()
+            body = self.create_body.copy()
             body["website_url"] = website_url
             response = self.client.post(url, body)
             self.assertEqual(response.status_code, 400)
@@ -68,8 +68,8 @@ class TestCreateTool(ToolTestCase):
     ### category_id : in Database
     def test_create_tool_with_invalid_category_id(self):
         url = reverse("tool-list")
-        body = self.body.copy()
-        body["category"] = self.NOT_FOUND_CATEGORY_ID
+        body = self.create_body.copy()
+        body["category"] = self.NOT_FOUND_ID
         response = self.client.post(url, body)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.data["category"], "Invalid category ID.")
@@ -79,7 +79,7 @@ class TestCreateTool(ToolTestCase):
         url = reverse("tool-list")
         invalids_vendors = ["" "a" * 101]
         for vendor in invalids_vendors:
-            body = self.body.copy()
+            body = self.create_body.copy()
             body["vendor"] = vendor
             response = self.client.post(url, body)
             self.assertEqual(response.status_code, 400)

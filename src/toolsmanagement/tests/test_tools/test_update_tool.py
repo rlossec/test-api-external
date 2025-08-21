@@ -5,9 +5,11 @@ from .test_tools import ToolTestCase
 
 
 class TestUpdateTool(ToolTestCase):
+    
+
     def test_update_tool(self):
       url = reverse("tool-detail", args=[self.tool_1.id])
-      response = self.client.put(url, self.body)
+      response = self.client.put(url, self.update_body)
       self.assertEqual(response.status_code, 200)
       self.assertEqual(response.data["name"], "Test Create UpdateTool 1")
       self.assertEqual(response.data["website_url"], "https://test-create-update-tool-1.com")
@@ -15,3 +17,77 @@ class TestUpdateTool(ToolTestCase):
       self.assertEqual(response.data["owner_department"], "EN")
       self.assertEqual(response.data["vendor"], "Test Create Update Vendor 1")
       self.assertEqual(response.data["category"], self.category_1.id)
+
+    # 200 response
+    def test_update_tool_with_partial_data(self):
+        url = reverse("tool-detail", args=[self.tool_1.id])
+        fields_to_update = ["name", "website_url", "description", "owner_department", "vendor", "category"]
+        for field in fields_to_update:
+            body = self.update_body.copy()
+            body.pop(field)
+            response = self.client.put(url, body)
+            self.assertEqual(response.status_code, 200)
+            # Field ignored should be the same as the original value
+            self.assertEqual(response.data[field], field)
+
+    # 404 response
+    def test_update_tool_with_invalid_id(self):
+        url = reverse("tool-detail", args=[self.NOT_FOUND_ID])
+        response = self.client.put(url, self.update_body)
+        self.assertEqual(response.status_code, 404)
+    
+    # 400 response
+    ## Validation errors
+
+    ### name : This field may have between 2 and 100 characters.
+    def test_update_tool_with_invalid_name(self):
+        url = reverse("tool-list")
+        invalids_names = ["", "a", "a" * 101]
+        for name in invalids_names:
+            body = self.update_body.copy()
+            body["name"] = name
+            response = self.client.post(url, body)
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.data["name"], "This field may have between 2 and 100 characters.")
+
+    ### base_monthly_cost : This field is a decimal field with 2 decimal places and strictly positive.
+    def test_update_tool_with_invalid_base_monthly_cost(self):
+        url = reverse("tool-list")
+        invalids_base_monthly_costs = ["", -1, 0, 1.001, "a"]
+        for base_monthly_cost in invalids_base_monthly_costs:
+            body = self.update_body.copy()
+            body["base_monthly_cost"] = base_monthly_cost
+            response = self.client.post(url, body)
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.data["base_monthly_cost"], "This field is a decimal field with 2 decimal places and strictly positive.")
+
+    ### website_url : URL must be a valid URL.
+    def test_update_tool_with_invalid_website_url(self):
+        url = reverse("tool-list")
+        invalids_website_urls = ["", "a", "a" * 101]
+        for website_url in invalids_website_urls:
+            body = self.update_body.copy()
+            body["website_url"] = website_url
+            response = self.client.post(url, body)
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.data["website_url"], "Enter a valid URL.")
+    
+    ### category_id : in Database
+    def test_update_tool_with_invalid_category_id(self):
+        url = reverse("tool-list")
+        body = self.update_body.copy()
+        body["category"] = self.NOT_FOUND_ID
+        response = self.client.post(url, body)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data["category"], "Invalid category ID.")
+
+    ### vendor : This fiels may have between 1 and 100 characters.
+    def test_update_tool_with_invalid_vendor(self):
+        url = reverse("tool-list")
+        invalids_vendors = ["" "a" * 101]
+        for vendor in invalids_vendors:
+            body = self.update_body.copy()
+            body["vendor"] = vendor
+            response = self.client.post(url, body)
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.data["vendor"], "This field may have between 1 and 100 characters.")
