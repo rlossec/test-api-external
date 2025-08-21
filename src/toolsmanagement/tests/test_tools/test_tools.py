@@ -62,3 +62,25 @@ class ToolTestCase(APITestCase):
         self.assertEqual(response.data["vendor"], "Test Create Update Vendor 1")
         self.assertEqual(response.data["category"], self.category_1.id)
         self.assertEqual(response.data["base_monthly_cost"], 100.00)
+
+    def test_retrieve_tool(self):
+        url = reverse("tool-detail", args=[self.tool_1.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["name"], "Test Tool 1")
+        self.assertEqual(response.data["website_url"], "https://test-tool-1.com")
+        self.assertEqual(response.data["description"], "Test Description")
+        self.assertEqual(response.data["owner_department"], "EN")
+        self.assertEqual(response.data["vendor"], "Test Vendor")
+        self.assertEqual(response.data["category"], self.category_1.id)
+
+    def test_update_tool(self):
+        url = reverse("tool-detail", args=[self.tool_1.id])
+        response = self.client.put(url, self.body)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["name"], "Test Create UpdateTool 1")
+        self.assertEqual(response.data["website_url"], "https://test-create-update-tool-1.com")
+        self.assertEqual(response.data["description"], "Test Create Update Description 1")
+        self.assertEqual(response.data["owner_department"], "EN")
+        self.assertEqual(response.data["vendor"], "Test Create Update Vendor 1")
+        self.assertEqual(response.data["category"], self.category_1.id)
