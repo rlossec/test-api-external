@@ -1,4 +1,6 @@
-python-dotenv
+python-dotenv==1.1.1
 
-djangorestframework
-psycopg2-binary
+djangorestframework==3.16.1
+psycopg2-binary==2.9.10
+
+drf-yasg==1.21.10
