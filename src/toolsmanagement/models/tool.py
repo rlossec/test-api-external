@@ -11,6 +11,10 @@ class ToolManager(models.Manager):
     def tools_by_department(self):
         """Retourne tous les outils par département"""
         return self.values('owner_department').annotate(tools_count=Count('id'))
+    
+    def departments_count(self):
+        """Retourne le nombre de départements différents"""
+        return self.values('owner_department').distinct().count()
 
 
 class Tool(BaseModel):

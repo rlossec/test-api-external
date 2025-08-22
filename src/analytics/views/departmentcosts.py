@@ -5,7 +5,7 @@ from django.db.models import Sum, Count, Avg, Q
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from toolsmanagement.models import CostTracking
+from toolsmanagement.models import CostTracking, Tool
 
 
 
@@ -25,6 +25,7 @@ class DepartmentCostsAnalyticsView(APIView):
         ## 1. calcul de la somme des couts dans CostTracking
         total_cost = CostTracking.objects.total_company_cost()
         ## 2. Calcul du nombre de owner_department différent
+        departments_count = Tool.objects.departments_count()
         ## 3. Calcul du owner_department le plus couteux
 
-        return Response({"data": [], "summary": {"total_cost": total_cost}})
+        return Response({"data": tools_by_department, "summary": {"total_cost": total_cost, "departments_count": departments_count}})
