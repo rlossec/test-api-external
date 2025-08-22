@@ -152,6 +152,18 @@ Exemple de réponse
 }
 ```
 
+Tables requises : 
+Sur Tools
+- tools_count : SUM GroupBy owner_department
+Sur TrackingCost 
+- total_company_cost : SUM colonne total_monthly_cost
+Sur Jointure entre Tools et TackingCost (avec tool_id)
+- total_cost : SUM total_monthly_cost
+- total_users : SUM active
+
+
+
+
 ### Top outils coûteux
 GET `analytics/expensive-tools`
 
