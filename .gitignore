@@ -11,3 +11,5 @@ __pycache__/
 
 
 
+/drafts/settings_environ.py
+/drafts/test_conn.py
