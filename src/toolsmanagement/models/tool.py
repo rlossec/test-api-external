@@ -1,9 +1,16 @@
 from datetime import date
 
 from django.db import models
+from django.db.models import Count, Sum, Avg, Q
 
 from .basemodel import BaseModel
 from .category import Category
+
+
+class ToolManager(models.Manager):
+    def tools_by_department(self):
+        """Retourne tous les outils par département"""
+        return self.values('owner_department').annotate(tools_count=Count('id'))
 
 
 class Tool(BaseModel):
@@ -42,7 +49,7 @@ class Tool(BaseModel):
     @property
     def active_users_count(self):
         """Nombre d'utilisateurs actuellement actifs sur cet outil"""
-        return self.usertoolaccess_set.filter(revoked_at__isnull=True).count()
+        return self.user_accesses.filter(revoked_at__isnull=True).count()
 
     @property
     def is_active(self):
@@ -58,4 +65,6 @@ class Tool(BaseModel):
 
     def get_active_users(self):
         """Retourne tous les utilisateurs actuellement actifs"""
-        return self.usertoolaccess_set.filter(revoked_at__isnull=True).select_related('user')
+        return self.user_accesses.filter(revoked_at__isnull=True).select_related('user')
+    
+    objects = ToolManager()
