@@ -42,7 +42,10 @@ En cas de problème d'encodage, ne pas hésiter à utiliser un éditeur pour ouv
 
 ## Tests
 
-Tests unitaires avec `python manage.py test`
+Pour lancer l'ensemble des test : `python manage.py test`
+Pour lancer les tests sur un endpoint, chaque endpoint a son fichier de test. Placer vous dans ce dossier, et vous verrez à la première ligne une commande.
+
+Par exemple pour tester l'endpoint `GET tools/` : `python manage.py test toolsmanagement.tests.test_tools.test_list_tools`
 
 ## Architecture
 
