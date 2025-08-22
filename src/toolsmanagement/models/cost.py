@@ -13,8 +13,7 @@ class CostTracking(BaseModel):
     class Meta:
         unique_together = ['tool', 'month_year']
         ordering = ['-month_year']
-        verbose_name = "Suivi de coût mensuel"
-        verbose_name_plural = "Suivis de coûts mensuels"
+        verbose_name = "Monthly cost tracking"
 
     def __str__(self):
         return f"{self.tool.name} - {self.month_year.strftime('%B %Y')}"
@@ -22,7 +21,7 @@ class CostTracking(BaseModel):
     @property
     def base_monthly_cost(self):
         """Coût mensuel de base de l'outil"""
-        return self.tool.monthly_cost
+        return self.tool.base_monthly_cost
 
     @property
     def additional_costs(self):
