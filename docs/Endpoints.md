@@ -121,7 +121,7 @@ PUT `tools/<tool_id>/`
 ## 2. Analytics
 
 ### Répartition coût par département
-GET `analytics/department_costs`
+GET `analytics/department-costs`
 
 Exemple de réponse
 ```json
@@ -153,7 +153,7 @@ Exemple de réponse
 ```
 
 ### Top outils coûteux
-GET `analytics/expensive_tools`
+GET `analytics/expensive-tools`
 
 Réponse attendue :
 ```json
@@ -179,7 +179,7 @@ Réponse attendue :
 ```
 
 ### Répartition des outils par catégories
-GET `analytics/tools_by_category`
+GET `analytics/tools-by-category`
 
 Réponse attendue :
 ```json
@@ -210,7 +210,7 @@ Réponse attendue :
 ```
 
 ### Outils sous-utilisés
-GET `analytics/low_usage_tools`
+GET `analytics/low-usage-tools`
 
 ```json
 {
@@ -236,7 +236,7 @@ GET `analytics/low_usage_tools`
 ```
 
 ### Analyse fournisseurs
-GET `analytics/vendor_summary`
+GET `analytics/vendor-summary`
 
 ```json
 {
