@@ -1,0 +1,5 @@
+from .departmentcosts import DepartmentCostsAnalyticsView
+from .expensivetools import ExpensiveToolsAnalyticsView
+from .lowusage import LowUsageToolsAnalyticsView
+from .toolsbycategory import ToolsByCategoryAnalyticsView
+from .vendorsummary import VendorSummaryAnalyticsView
